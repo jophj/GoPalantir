@@ -1,7 +1,9 @@
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+
+const gymDetailsMiddleware = require('./gym-details-middleware')
+const gymMiddleware = require('./gym-middleware')
 
 const dbHost = '192.168.1.100'
 const dbName = 'goPalantirDev'
@@ -18,14 +20,10 @@ const hostname = '0.0.0.0'
 const port = 3009
 
 app.use(bodyParser.json())
+app.use(gymDetailsMiddleware);
+app.use(gymMiddleware);
 
-app.post('/', function (req, res) {
-  const message = req.body;
-  if (message.type == 'gym_details') {
-    console.log(message)
-  }
-    console.log(message)
-  
+app.post('/', function (req, res) { 
   res.end()
 })
 
