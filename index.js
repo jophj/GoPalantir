@@ -30,3 +30,5 @@ app.post('/', function (req, res) {
 app.listen(port, hostname, () => {
   console.log(`GoPalantir webhook running at http://${hostname}:${port}/`)
 })
+
+const gym = require('./schemas/gym')

@@ -22,4 +22,8 @@ const gymPokemonSchema = mongoose.Schema({
 })
 
 var GymPokemon = mongoose.model('GymPokemon', gymPokemonSchema)
-module.exports = GymPokemon
+
+module.exports = {
+  schema: gymPokemonSchema,
+  model: GymPokemon
+} 
