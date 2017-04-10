@@ -24,11 +24,11 @@ app.post('/', function (req, res) {
   if (message.type == 'gym_details') {
     console.log(message)
   }
+    console.log(message)
+  
   res.end()
 })
 
 app.listen(port, hostname, () => {
   console.log(`GoPalantir webhook running at http://${hostname}:${port}/`)
 })
-
-const gym = require('./schemas/gym')

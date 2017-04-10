@@ -1,16 +1,15 @@
 const mongoose = require('mongoose')
-const GymPokemonSchema = require('./gym-pokemon').schema
 const Schema = mongoose.Schema
 
 const gymSchema = mongoose.Schema({
-  id: String,
-  url: String,
-  name: String,
-  description: String,
-  team: Number,
+  team_id: Number,
+  gym_points: Number,
+  last_modified: Number,
   latitude: Number,
   longitude: Number,
-  pokemon: [GymPokemonSchema]
+  guard_pokemon_id: Number,
+  enabled: Boolean,
+  gym_id: String
 })
 
 var Gym = mongoose.model('Gym', gymSchema)
