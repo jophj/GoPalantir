@@ -15,7 +15,7 @@ const gymPokemonSchema = mongoose.Schema({
   cp_multiplier: Number,
   height: Number,
   stamina: Number,
-  pokemon_uid: Number,
+  pokemon_uid: { type: Number, index: true},
   trainer_name: String,
   trainer_level: Number,
   cp: Number

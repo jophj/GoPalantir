@@ -9,7 +9,7 @@ const gymSchema = mongoose.Schema({
   longitude: Number,
   guard_pokemon_id: Number,
   enabled: Boolean,
-  gym_id: String,
+  gym_id: { type: String, index: true},
   date: { type: Date, default: Date.now }
 })
 

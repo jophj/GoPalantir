@@ -1,0 +1,9 @@
+{
+  "hostname": "0.0.0.0",
+  "port": 3009,
+  "dbHost": "192.168.1.100",
+  "dbPort": "27017",
+  "dbName": "goPalantir",
+  "dbUser": "goPalantir",
+  "dbPass": "LongSafePassword!"
+}

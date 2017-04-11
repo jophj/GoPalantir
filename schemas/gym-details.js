@@ -3,7 +3,7 @@ const GymPokemonSchema = require('./gym-pokemon').schema
 const Schema = mongoose.Schema
 
 const gymDetailsSchema = mongoose.Schema({
-  id: String,
+  id: { type: String, index: true },
   url: String,
   name: String,
   description: String,
