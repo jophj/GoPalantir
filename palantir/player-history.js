@@ -2,7 +2,7 @@ const Promise = require('bluebird')
 const Gym = require('../schemas/gym').model
 const GymDetails = require('../schemas/gym-details').model
 
-const trainerName = "ZioTrave"
+const trainerName = "AMindJoke"
 
 function queryAllPresences(callback) {
   GymDetails.aggregate([
@@ -22,8 +22,18 @@ function queryAllPresences(callback) {
     .exec(callback)
 }
 
+function queryGymDetailsHistory(gymId, callback) {
+  GymDetails
+    .find({ id: gymId})
+    .exec(callback)
+}
+
 const getAllPresences = Promise.promisify(queryAllPresences)
 getAllPresences().then((data) => {
+  console.log(data)
+})
+const getGymDetailsHistory = Promise.promisify(queryGymDetailsHistory)
+getGymDetailsHistory("OGIyMmIzODcyNGJiNDEwYzk1NWQ3Mzk0ZjU5ZDk0OTEuMTY=").then( (data) => {
   console.log(data)
 })
 
