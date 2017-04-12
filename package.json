@@ -4,6 +4,7 @@
   "description": "GoPalantir is a RocketMap extension that tracks gym activity in you area",
   "main": "index.js",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "mongoose": "^4.9.4"
