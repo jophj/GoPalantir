@@ -27,8 +27,6 @@ var db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function() {
   console.log(`Connected to database mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`)
-
-  require('./palantir/player-history') // TODO remove me
 });
 
 const app = express()
