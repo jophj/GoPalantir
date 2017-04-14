@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
-mongoose.Promise = require('bluebird');
+mongoose.Promise = require('bluebird')
 
 const gymDetailsMiddleware = require('./gym-details-middleware')
 const gymMiddleware = require('./gym-middleware')
@@ -22,7 +22,7 @@ const config = {
   dbPass: userConfig.dbPass || 'LongSafePassword!1!11!',
 }
 
-mongoose.connect(`mongodb://${config.dbUser}:${config.dbPass}@${config.dbHost}:${config.dbPort}/${config.dbName}`);
+mongoose.connect(`mongodb://${config.dbUser}:${config.dbPass}@${config.dbHost}:${config.dbPort}/${config.dbName}`)
 var db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function() {
@@ -31,10 +31,10 @@ db.once('open', function() {
 
 const app = express()
 app.use(bodyParser.json())
-app.use(gymDetailsMiddleware);
-app.use(gymMiddleware);
+app.use(gymDetailsMiddleware)
+app.use(gymMiddleware)
 
-app.post('/', function (req, res) { 
+app.post('/', function (req, res) {
   res.end()
 })
 

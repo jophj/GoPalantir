@@ -18,8 +18,7 @@ const TRAINER_EVENT_TYPE = {
   exiting: 'exiting'
 }
 
-const trainerEventDateComparer = (a, b) => a.gymDetails.date.getTime() > b.gymDetails.date.getTime()
-const gymDetailsDateComparer = (a, b) => a.date.getTime() > b.date.getTime()
+const trainerEventDateComparer = (a, b) => a.gymDetails.date.getTime() - b.gymDetails.date.getTime()
 
 function getAllPresences(trainerName, callback) {
   let promise = new Promise((resolve, reject) => {
@@ -49,10 +48,10 @@ function getGymDetailsHistory(gymId) {
   let promise = new Promise((resolve, reject) => {
     GymDetails
       .find({ id: gymId })
-      .sort({ date: -1 })
+      .sort({ date: 1 })
       .exec((err, data) => {
         if (err) reject(err)
-        else resolve(data.sort(gymDetailsDateComparer))
+        else resolve(data)
       })
   })
   return promise
