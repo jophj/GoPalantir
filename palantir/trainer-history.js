@@ -11,10 +11,14 @@
  */
 
 const Promise = require('bluebird')
-const Gym = require('../schemas/gym').model
 const GymDetails = require('../schemas/gym-details').model
 
-const trainerName = "AMindJoke"
+const TRAINER_EVENT_TYPE = {
+  entering: 'entering',
+  exiting: 'exiting'
+}
+
+const trainerEventDateComparer = (a, b) => a.gymDetails.date.getTime() - b.gymDetails.date.getTime()
 
 function getAllPresences(trainerName, callback) {
   let promise = new Promise((resolve, reject) => {
@@ -40,11 +44,11 @@ function getAllPresences(trainerName, callback) {
   return promise
 }
 
-function getGymDetailsHistory(gymId, callback) {
+function getGymDetailsHistory(gymId) {
   let promise = new Promise((resolve, reject) => {
     GymDetails
       .find({ id: gymId })
-      .sort({ date: -1 })
+      .sort({ date: 1 })
       .exec((err, data) => {
         if (err) reject(err)
         else resolve(data)
@@ -69,7 +73,7 @@ function getTrainerHistory(trainerName) {
         trainerEvents.push(...v)
       })
         .then(() => {
-          mainResolve(trainerEvents.sort((a, b) => a.gymDetails.date.getTime() > b.gymDetails.date.getTime()))
+          mainResolve(trainerEvents.sort(trainerEventDateComparer))
         })
     })
   })
@@ -99,11 +103,6 @@ function getTrainerEvents(trainerName, gymDetailsHistory) {
   });
 
   return trainerEvents;
-}
-
-const TRAINER_EVENT_TYPE = {
-  entering: 'entering',
-  exiting: 'exiting'
 }
 
 class TrainerEvent {
