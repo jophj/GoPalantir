@@ -11,7 +11,7 @@ const gymDetailsSchema = mongoose.Schema({
   latitude: Number,
   longitude: Number,
   pokemon: [GymPokemonSchema],
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now, index: true }
 })
 
 var GymDetails = mongoose.model('GymDetails', gymDetailsSchema)
