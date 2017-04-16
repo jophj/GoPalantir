@@ -1,1 +1,14 @@
-<span> Gym status component </span>
+<md-card layout="row" class="md-padding">
+  <div layout="column" layout-align="center center">
+    <md-icon md-svg-src="images/instinct-1.svg" style="width: 64px; height: 64px"></md-icon>
+    <span class="">{{$ctrl.gym.gym.gym_points}}</span>
+  </div>
+
+  <div layout="column" class="md-padding" flex>
+    <span class="md-body-2">{{$ctrl.gym.details.name}}</span>
+
+    <div layout="row" layout-align="end start">
+      <md-button>Directions</md-button>
+    </div>
+  </div>
+</md-card>
