@@ -40,7 +40,7 @@ function getGymsStatus() {
   .then((gymDetailsResult) => {
     let gymDetailsKeyValue = {}
     gymDetailsResult.forEach(function(gymDetails) {
-      gymDetailsKeyValue[gymDetails.details.id] = gymDetails
+      gymDetailsKeyValue[gymDetails.details.id] = gymDetails.details
     });
 
     gymsStatus.forEach(g => g.details = gymDetailsKeyValue[g.gym.gym_id])
