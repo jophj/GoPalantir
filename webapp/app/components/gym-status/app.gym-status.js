@@ -30,5 +30,11 @@ function GymStatusViewController(GymStatusService, $scope) {
 }
 
 function GymStatusComponentController() {
-  
+  var ctrl = this
+  ctrl.gymIcon = [
+    '',
+    'images/mystic-1.svg',
+    'images/valor-1.svg',
+    'images/mystic-1.svg'
+  ]
 }
