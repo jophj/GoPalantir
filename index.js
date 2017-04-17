@@ -1,11 +1,12 @@
 const express = require('express')
+const compression = require('compression')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-
 mongoose.Promise = require('bluebird')
 
 const gymDetailsMiddleware = require('./gym-details-middleware')
 const gymMiddleware = require('./gym-middleware')
+const apiRouter = require('./apis/api-router')
 
 let userConfig = {}
 try {
@@ -30,9 +31,16 @@ db.once('open', function() {
 });
 
 const app = express()
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
+app.use(compression())
 app.use(bodyParser.json())
-app.use(gymDetailsMiddleware)
-app.use(gymMiddleware)
+// app.use(gymDetailsMiddleware)
+// app.use(gymMiddleware)
+app.use('/api', apiRouter)
 
 app.post('/', function (req, res) {
   res.end()

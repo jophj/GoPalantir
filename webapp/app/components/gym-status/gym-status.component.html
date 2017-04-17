@@ -5,11 +5,11 @@
   </div>
 
   <div layout="column" class="md-padding" flex>
-    <span class="md-body-2">{{$ctrl.gym.name}}</span>
+    <span class="md-body-2">{{$ctrl.gym.name || 'Data not available'}}</span>
     <div class="md-body-1">
-      <span>Level&nbsp;</span>
-      <span>x</span>
-      <span>({{$ctrl.gym.pokemon.length}}/x)</span>
+      <span>Level</span>
+      <span>{{$ctrl.gym.level}}</span>
+      <span>({{$ctrl.gym.pokemon.length || '-'}}/{{$ctrl.gym.level || '-'}})</span>
     </div>
 
     <div layout="row" layout-align="end start">

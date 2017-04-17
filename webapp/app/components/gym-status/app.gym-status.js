@@ -1,4 +1,4 @@
-angular.module('gymTrackr.gymStatus', [])
+angular.module('gymTrackr.gymStatus', ['gymTrackr.services'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/gym-status', {
@@ -29,12 +29,17 @@ function GymStatusViewController(GymStatusService, $scope) {
     .catch(console.log)
 }
 
-function GymStatusComponentController() {
+GymStatusComponentController.$inject = ['GymLevelCalculator']
+function GymStatusComponentController(GymLevelCalculator) {
   var ctrl = this
   ctrl.gymIcon = [
-    '',
+    'images/noteam-1.svg',
     'images/mystic-1.svg',
     'images/valor-1.svg',
-    'images/mystic-1.svg'
+    'images/instinct-1.svg'
   ]
+
+  ctrl.$onInit = function() {
+    ctrl.gym.level = GymLevelCalculator.level(ctrl.gym.points)
+  }
 }

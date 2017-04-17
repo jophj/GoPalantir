@@ -1,5 +1,5 @@
 angular
-  .module('gymTrackr')
+  .module('gymTrackr.gymStatus')
   .factory('GymStatusService', GymStatusService);
 
 GymStatusService.$inject = ['$http']
