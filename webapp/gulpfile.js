@@ -18,7 +18,6 @@ var cssnano = require('gulp-cssnano');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 
-
 // Lint JavaScript
 gulp.task('lint', () =>
   gulp.src(['app/scripts/**/*.js', '!node_modules/**'])
@@ -120,12 +119,18 @@ gulp.task('template-cache', () =>
     .pipe(gulp.dest('dist'))
 );
 
+gulp.task('images', () =>
+  gulp.src([
+    './app/images/**/*',
+  ])
+  .pipe(gulp.dest('dist/images'))
+);
 
 // Clean output directory
 gulp.task('clean', () => del(['dist/*', '!dist/.git'], {dot: true}));
 
 // Watch files for changes & reload
-gulp.task('serve', ['js', 'template-cache', 'inject-js', 'js-libs', 'scss', 'scss-libs'], () => {
+gulp.task('serve', ['js', 'template-cache', 'inject-js', 'js-libs', 'scss', 'scss-libs', 'images'], () => {
   browserSync.init({
     notify: false,
     open: false,
@@ -142,7 +147,7 @@ gulp.task('serve', ['js', 'template-cache', 'inject-js', 'js-libs', 'scss', 'scs
   gulp.watch(['app/components/**/*.html'], ['template-cache', browserSync.reload]);
   gulp.watch(['app/**/*.{scss,css}'], ['scss', () => browserSync.reload("dist/app.css")]);
   gulp.watch(['app/**/*.js'], ['js', browserSync.reload]);
-  gulp.watch(['app/images/**/*'], browserSync.reload);
+  gulp.watch(['app/images/**/*'], ['images', browserSync.reload]);
   gulp.watch(['app/index.html'], ['inject-js', browserSync.reload]);
 });
 

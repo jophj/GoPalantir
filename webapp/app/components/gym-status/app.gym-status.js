@@ -14,15 +14,27 @@ angular.module('gymTrackr.gymStatus', [])
 
 .component('gymStatus', {
   templateUrl: 'gym-status/gym-status.component.html',
-  controller: GymStatusComponentController
+  controller: GymStatusComponentController,
+  bindings: {
+    gym: '='
+  }
 })
 
 GymStatusViewController.$inject = ['GymStatusService', '$scope'];
 function GymStatusViewController(GymStatusService, $scope) {
-  var ctrl = this;
-  GymStatusService.getAll().then(gymsStatus => $scope.gymsStatus = gymsStatus)
+  var ctrl = this
+  GymStatusService
+    .getAll()
+    .then(function(gymsStatus) {$scope.gymsStatus = gymsStatus})
+    .catch(console.log)
 }
 
 function GymStatusComponentController() {
-  
+  var ctrl = this
+  ctrl.gymIcon = [
+    '',
+    'images/mystic-1.svg',
+    'images/valor-1.svg',
+    'images/mystic-1.svg'
+  ]
 }
