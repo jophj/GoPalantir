@@ -17,3 +17,6 @@ app.config([
 
 // All templates dropped here
 angular.module('gymTrackr.templates', []);
+
+// All global services dropped here
+angular.module('gymTrackr.services', []);

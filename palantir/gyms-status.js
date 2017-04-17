@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
 const Gym = require('../schemas/gym').model
 const GymDetails = require('../schemas/gym-details').model
-const GymStatus = require('../models/gymStatus')
+const GymStatus = require('../models/gym-status')
 
 function gymStatusMapper(g) {
   let gymStatus = new GymStatus
