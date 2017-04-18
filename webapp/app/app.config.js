@@ -4,14 +4,15 @@ var app = angular.module('gymTrackr', [
   'gymTrackr.templates',
   'pascalprecht.translate',
 
-  'gymTrackr.gymStatus'
+  'gymTrackr.gymStatus',
+  'gymTrackr.gymDetails'
   ]);
 
 app.config([
   '$translateProvider', '$routeProvider',
   function($translateProvider, $routeProvider) {
     $translateProvider.preferredLanguage('it');
-    $routeProvider.otherwise({redirectTo: '/gym-status'})
+    //$routeProvider.otherwise({redirectTo: '/gym-status'})
   }
 ]);
 
