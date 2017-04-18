@@ -1,11 +1,12 @@
 const express = require('express')
+const compression = require('compression')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-
 mongoose.Promise = require('bluebird')
 
 const gymDetailsMiddleware = require('./gym-details-middleware')
 const gymMiddleware = require('./gym-middleware')
+const apiRouter = require('./apis/api-router')
 
 let userConfig = {}
 try {
@@ -15,6 +16,7 @@ catch (e) { console.log(e)}
 const config = {
   hostname: userConfig.hostname || 'localhost',
   port: userConfig.port || 3009,
+  webhookKey: userConfig.webhookKey || "secretWebookKey",
   dbHost: userConfig.dbHost || 'localhost',
   dbPort: userConfig.dbPort || 27017,
   dbName: userConfig.dbName || 'goPalantir',
@@ -30,9 +32,12 @@ db.once('open', function() {
 });
 
 const app = express()
+app.use(express.static('webapp/dist'))
+app.use(compression())
 app.use(bodyParser.json())
-app.use(gymDetailsMiddleware)
-app.use(gymMiddleware)
+app.use(`/${config.webhookKey}`, gymDetailsMiddleware)
+app.use(`/${config.webhookKey}`, gymMiddleware)
+app.use('/api', apiRouter)
 
 app.post('/', function (req, res) {
   res.end()

@@ -14,6 +14,7 @@
 
 const Promise = require('bluebird')
 const Gym = require('../schemas/gym').model
+const GymDetails = require('../schemas/gym-details').model
 
 const GYM_EVENT_TYPE = {
   INCREASING: 'increasing',
@@ -55,18 +56,44 @@ function getGymHistory(gymId) {
             gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.DECREASING, g))
           }
           else {
-            gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.STABLE, g))        
+            // stable event removed to have less data to process
+            // gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.STABLE, g))
           }
         }
         else {
-          gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.CONQUERED, g))        
+          gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.CONQUERED, g))
         }
 
         currentState.points = g.gym_points
         currentState.teamId = g.team_id
       })
+      gymEvents.reverse()
 
-      resolve(gymEvents)
+      let detailsPromises = gymEvents.map(g => {
+        let promise = new Promise((resolve, reject) => {
+          // can be optimized using date ranges
+          GymDetails.find({
+            id: g.gymId,
+            date: { $gt: g.gym.date }
+          })
+          .sort({date: 1})
+          .limit(1)
+          .exec((err, data) => {
+            if (data && data.length > 0) {
+              g.details = data[0]              
+            }
+            if (err) reject(err)
+            else resolve(g)
+          })
+        })
+        return promise
+      })
+
+      Promise
+        .all(detailsPromises)
+        .then(events => {
+          resolve(gymEvents)
+        })
     })
   })
   return promise
