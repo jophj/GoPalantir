@@ -1,6 +1,7 @@
 {
   "hostname": "0.0.0.0",
   "port": 3009,
+  "webhookKey": "secretWebhookey",
   "dbHost": "192.168.1.100",
   "dbPort": "27017",
   "dbName": "goPalantir",

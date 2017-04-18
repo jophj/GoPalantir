@@ -16,6 +16,7 @@ catch (e) { console.log(e)}
 const config = {
   hostname: userConfig.hostname || 'localhost',
   port: userConfig.port || 3009,
+  webhookKey: userConfig.webhookKey || "secretWebookKey",
   dbHost: userConfig.dbHost || 'localhost',
   dbPort: userConfig.dbPort || 27017,
   dbName: userConfig.dbName || 'goPalantir',
@@ -31,15 +32,11 @@ db.once('open', function() {
 });
 
 const app = express()
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000")
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-  next()
-})
+app.use(express.static('webapp/dist'))
 app.use(compression())
 app.use(bodyParser.json())
-// app.use(gymDetailsMiddleware)
-// app.use(gymMiddleware)
+app.use(`/${config.webhookKey}`, gymDetailsMiddleware)
+app.use(`/${config.webhookKey}`, gymMiddleware)
 app.use('/api', apiRouter)
 
 app.post('/', function (req, res) {

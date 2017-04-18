@@ -19,13 +19,6 @@ function GymSnapshotController(GymLevelCalculator) {
     'yellow'
   ]
 
-  ctrl.gymIcon = [
-    '/images/noteam-1.svg',
-    '/images/mystic-1.svg',
-    '/images/valor-1.svg',
-    '/images/instinct-1.svg',
-  ]
-
   ctrl.$onInit = function() {
     ctrl.date = new Date(ctrl.gymSnapshot.gym.date).toLocaleDateString()
     ctrl.time = new Date(ctrl.gymSnapshot.gym.date).toLocaleTimeString()

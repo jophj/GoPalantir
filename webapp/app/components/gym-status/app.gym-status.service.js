@@ -2,14 +2,14 @@ angular
   .module('gymTrackr.gymStatus')
   .factory('GymStatusService', GymStatusService);
 
-GymStatusService.$inject = ['$http']
-function GymStatusService($http) {
+GymStatusService.$inject = ['$http', 'API_SERVER_LOCATION']
+function GymStatusService($http, API_SERVER_LOCATION) {
   let service = {};
   service.getAll = getAll;
   return service;
 
   function getAll() {
-    return $http.get('http://localhost:3009/api/gym-status').then(handleSuccess)
+    return $http.get('api/gym-status').then(handleSuccess)
   }
 
   function handleSuccess(res) {

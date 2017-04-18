@@ -1,0 +1,3 @@
+angular
+  .module('gymTrackr.config', [])
+  .constant('API_SERVER_LOCATION', 'http://localhost:3009/api')
