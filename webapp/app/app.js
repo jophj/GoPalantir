@@ -12,7 +12,7 @@ app.config([
   '$translateProvider', '$routeProvider',
   function($translateProvider, $routeProvider) {
     $translateProvider.preferredLanguage('it');
-    //$routeProvider.otherwise({redirectTo: '/gym-status'})
+    $routeProvider.otherwise({redirectTo: '/gym-status'})
   }
 ]);
 
