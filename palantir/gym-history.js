@@ -76,7 +76,7 @@ function getGymHistory(gymId) {
             id: g.gymId,
             date: { $gt: g.gym.date }
           })
-          .sort({date: -1})
+          .sort({date: 1})
           .limit(1)
           .exec((err, data) => {
             if (data && data.length > 0) {
