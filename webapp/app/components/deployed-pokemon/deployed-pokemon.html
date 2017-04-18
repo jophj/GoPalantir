@@ -11,5 +11,5 @@
       <span>{{$ctrl.pokemon.iv_attack}}/{{$ctrl.pokemon.iv_defense}}/{{$ctrl.pokemon.iv_stamina}}</span>
       <span>({{($ctrl.pokemon.iv_attack+$ctrl.pokemon.iv_defense+$ctrl.pokemon.iv_stamina)/45*100 | number:0}}%)</span>
     </div>
-    <span class="md-body-1">{{$ctrl.pokemon.move_1}}/{{$ctrl.pokemon.move_2}}</span>
+    <span class="md-body-1">{{$ctrl.moves[$ctrl.pokemon.move_1].name}}/{{$ctrl.moves[$ctrl.pokemon.move_2].name}}</span>
 </div>

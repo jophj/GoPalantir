@@ -1,4 +1,4 @@
-angular.module('gymTrackr.gymDetails', [])
+angular.module('gymTrackr.gymDetails', ['gymTrackr.services'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/gym-details/:id', {
