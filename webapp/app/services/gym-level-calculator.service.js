@@ -9,7 +9,7 @@ var service = {}
   service.level = level
   return service
   function level(points) {
-    for (var i = gymLevels.length - 1; i > 0; i--) {
+    for (var i = gymLevels.length - 1; i >= 0; i--) {
       if (points >= gymLevels[i]) {
         return i + 1
       }

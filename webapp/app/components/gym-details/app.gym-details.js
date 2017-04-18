@@ -12,8 +12,13 @@ angular.module('gymTrackr.gymDetails', ['gymTrackr.services'])
   controller: GymDetailsViewController,
 })
 
-GymDetailsViewController.$inject = ['GymDetailsService']
-function GymDetailsViewController(GymDetailsService) {
+GymDetailsViewController.$inject = ['GymDetailsService', '$routeParams']
+function GymDetailsViewController(GymDetailsService, $routeParams) {
   let ctrl = this
   ctrl.gym = GymDetailsService.gym
+
+  GymDetailsService
+    .loadHistory($routeParams.id)
+    .then(function(gymHistory) {ctrl.gymHistory = gymHistory})
+    .catch(console.log)
 }
