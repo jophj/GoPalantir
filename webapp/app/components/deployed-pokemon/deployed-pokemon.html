@@ -1,0 +1,15 @@
+<div layout="row">
+  <div layout="column" layout-align="center center" class="md-padding">
+    <img ng-src="/images/pokemon/{{$ctrl.pokemon.pokemon_id}}.png" alt="">
+    <span class="md-body-1">{{$ctrl.pokemon.cp}}</span>
+  </div>
+
+  <div layout="column" class="md-padding" flex>
+    <span class="md-body-2">{{$ctrl.pokemon.trainer_name || 'Data not available'}}</span>
+    <div class="md-body-1">
+      <span>IVs</span>
+      <span>{{$ctrl.pokemon.iv_attack}}/{{$ctrl.pokemon.iv_defense}}/{{$ctrl.pokemon.iv_stamina}}</span>
+      <span>({{($ctrl.pokemon.iv_attack+$ctrl.pokemon.iv_defense+$ctrl.pokemon.iv_stamina)/45*100 | number:0}}%)</span>
+    </div>
+    <span class="md-body-1">{{$ctrl.moves[$ctrl.pokemon.move_1].name}}/{{$ctrl.moves[$ctrl.pokemon.move_2].name}}</span>
+</div>

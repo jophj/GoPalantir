@@ -1,0 +1,8 @@
+<md-content>
+  <div layout="column" flex>
+    <gym-status gym="$ctrl.gym"></gym-status>
+    <md-card>
+      <deployed-pokemon ng-repeat="pokemon in $ctrl.gym.pokemon" pokemon="pokemon"></deployed-pokemon>
+    </md-card>
+  </div>
+</md-content>
