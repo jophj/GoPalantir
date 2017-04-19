@@ -1,15 +1,15 @@
 <div layout="row">
-  <div md-colors="::{background: $ctrl.teamColor[{{$ctrl.gymSnapshot.gym.team_id}}]}">&nbsp;</div>
+  <div md-colors="::{background: $ctrl.teamColor[{{$ctrl.gymSnapshot.teamId}}]}">&nbsp;</div>
   <div layout="column" layout-align="start center" class="md-padding md-body-1" flex="nogrow">
     <span>{{$ctrl.date}}</span>
     <span>{{$ctrl.time}}</span>
-    <span>{{$ctrl.gymSnapshot.gym.gym_points}}</span>
+    <span>{{$ctrl.gymSnapshot.points}}</span>
     <span>Level: {{$ctrl.gymSnapshotLevel}}</span>
-    <span>({{$ctrl.gymSnapshot.details.pokemon.length}}/{{$ctrl.gymSnapshotLevel}})</span>
+    <span>({{$ctrl.gymSnapshot.pokemon.length}}/{{$ctrl.gymSnapshotLevel}})</span>
   </div>
 
   <div layout="column" class="md-padding">
-    <div ng-repeat="pokemon in $ctrl.gymSnapshot.details.pokemon | orderBy:'':true track by $index">
+    <div ng-repeat="pokemon in $ctrl.gymSnapshot.pokemon | orderBy:'':true track by $index">
       <span class="md-caption">{{$index+1}}.</span>
       <span class="md-caption">{{pokemon.trainer_name}}</span>
     </div>

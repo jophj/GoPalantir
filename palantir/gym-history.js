@@ -12,9 +12,26 @@
  * })
  */
 
+function gymStatusMapper(g) {
+  let gymStatus = new GymStatus
+  gymStatus.id = g.gym.gym_id
+  gymStatus.name = g.details && g.details.name
+  gymStatus.points = g.gym.gym_points
+  gymStatus.teamId = g.gym.team_id
+  gymStatus.date = g.gym.date
+  gymStatus.lastModified = g.gym.last_modified
+  gymStatus.pokemon = g.details && g.details.pokemon
+  gymStatus.latitude = g.gym.latitude
+  gymStatus.longitude = g.gym.longitude
+  gymStatus.imageUrl = g.details && g.details.url
+  gymStatus.activityIntensity = g.activity
+  return gymStatus
+}
+
 const Promise = require('bluebird')
 const Gym = require('../schemas/gym').model
 const GymDetails = require('../schemas/gym-details').model
+const GymStatus = require('../models/gym-status')
 
 const GYM_EVENT_TYPE = {
   INCREASING: 'increasing',
@@ -112,7 +129,7 @@ function getGymHistory(gymId) {
       Promise
         .all(detailsPromises)
         .then(events => {
-          resolve(gymEvents)
+          resolve(gymEvents.map(gymStatusMapper))
         })
     })
   })
