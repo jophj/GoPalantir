@@ -140,8 +140,9 @@ gulp.task('serve', ['js', 'template-cache', 'inject-js', 'js-libs', 'scss', 'scs
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: './dist',
-    port: 3000
+    //server: './dist',
+    port: 3000,
+    proxy: 'localhost:3009'
   });
 
   gulp.watch(['app/components/**/*.html'], ['template-cache', browserSync.reload]);
