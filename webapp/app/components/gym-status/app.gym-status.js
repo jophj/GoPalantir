@@ -44,7 +44,7 @@ function GymStatusComponentController($location, GymLevelCalculator, GymDetailsS
   ]
 
   ctrl.$onInit = function() {
-    ctrl.gym.level = GymLevelCalculator.level(ctrl.gym.points)
+    if (ctrl.gym) ctrl.gym.level = GymLevelCalculator.level(ctrl.gym.points)
   }
 
   ctrl.onClick = function() {
