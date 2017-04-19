@@ -19,6 +19,11 @@ function GymDetailsViewController(GymDetailsService, $routeParams) {
 
   GymDetailsService
     .loadHistory($routeParams.id)
-    .then(function(gymHistory) {ctrl.gymHistory = gymHistory})
+    .then(function(gymHistory) {
+      if (!ctrl.gym){
+        ctrl.gym = gymHistory[0]
+      }
+      ctrl.gymHistory = gymHistory
+    })
     .catch(console.log)
 }

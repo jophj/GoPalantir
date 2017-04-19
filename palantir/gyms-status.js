@@ -5,7 +5,7 @@ const GymStatus = require('../models/gym-status')
 
 function gymStatusMapper(g) {
   let gymStatus = new GymStatus
-  gymStatus.id = g._id
+  gymStatus.id = g.gym.gym_id
   gymStatus.name = g.details && g.details.name
   gymStatus.points = g.gym.gym_points
   gymStatus.teamId = g.gym.team_id

@@ -20,9 +20,9 @@ function GymSnapshotController(GymLevelCalculator) {
   ]
 
   ctrl.$onInit = function() {
-    ctrl.date = new Date(ctrl.gymSnapshot.gym.date).toLocaleDateString()
-    ctrl.time = new Date(ctrl.gymSnapshot.gym.date).toLocaleTimeString()
-    ctrl.gymSnapshotLevel = GymLevelCalculator.level(ctrl.gymSnapshot.gym.gym_points)
+    ctrl.date = new Date(ctrl.gymSnapshot.date).toLocaleDateString()
+    ctrl.time = new Date(ctrl.gymSnapshot.date).toLocaleTimeString()
+    ctrl.gymSnapshotLevel = GymLevelCalculator.level(ctrl.gymSnapshot.points)
   }
 }
 
