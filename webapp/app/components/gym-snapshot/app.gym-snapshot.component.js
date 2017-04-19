@@ -1,15 +1,16 @@
 angular.module('gymTrackr.gymDetails')
 
 .component('gymSnapshot', {
-  templateUrl: 'gym-snapshot/gym-snapshot.html',
+  templateUrl: 'gym-snapshot/gym-snapshot.component.html',
   controller: GymSnapshotController,
   bindings: {
-    gymSnapshot: '<'
+    gymSnapshot: '<',
+    scroll: '<'
   }
 })
 
-GymSnapshotController.$inject = ['GymLevelCalculator']
-function GymSnapshotController(GymLevelCalculator) {
+GymSnapshotController.$inject = ['GymLevelCalculator', '$anchorScroll', '$timeout']
+function GymSnapshotController(GymLevelCalculator, $anchorScroll, $timeout) {
   const ctrl = this
 
   ctrl.teamColor = [
@@ -23,6 +24,9 @@ function GymSnapshotController(GymLevelCalculator) {
     ctrl.date = new Date(ctrl.gymSnapshot.date).toLocaleDateString()
     ctrl.time = new Date(ctrl.gymSnapshot.date).toLocaleTimeString()
     ctrl.gymSnapshotLevel = GymLevelCalculator.level(ctrl.gymSnapshot.points)
+    if (ctrl.scroll) {
+      $timeout(function(){$anchorScroll(ctrl.gymSnapshot.date)})
+    }
   }
 }
 

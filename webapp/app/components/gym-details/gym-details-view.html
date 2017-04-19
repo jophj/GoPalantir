@@ -7,7 +7,7 @@
     </md-card>
     <span class="md-headline" layout="row" layout-align="center center">History</span>
     <md-card>
-      <gym-snapshot ng-repeat="snapshot in $ctrl.gymHistory" gym-snapshot="snapshot"></gym-history>
+      <gym-snapshot ng-repeat="snapshot in $ctrl.gymHistory" gym-snapshot="snapshot" scroll="$ctrl.scrollToSnapshot === snapshot.date"></gym-history>
     </md-card>
   </div>
 </md-content>
