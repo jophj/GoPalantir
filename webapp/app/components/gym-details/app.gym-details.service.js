@@ -9,7 +9,7 @@ function GymDetailsService($http, API_SERVER_LOCATION) {
   return service
 
   function loadHistory(gymId) {
-    return $http.get(API_SERVER_LOCATION+'/gym-history/' + gymId).then(handleSuccess)
+    return $http.get('/api/gym-history/' + gymId).then(handleSuccess)
   }
 
   function handleSuccess(res) {

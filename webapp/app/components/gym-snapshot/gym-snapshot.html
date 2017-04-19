@@ -9,7 +9,7 @@
   </div>
 
   <div layout="column" class="md-padding">
-    <div ng-repeat="pokemon in $ctrl.gymSnapshot.details.pokemon |  orderBy:'':true track by $index">
+    <div ng-repeat="pokemon in $ctrl.gymSnapshot.details.pokemon | orderBy:'':true track by $index">
       <span class="md-caption">{{$index+1}}.</span>
       <span class="md-caption">{{pokemon.trainer_name}}</span>
     </div>

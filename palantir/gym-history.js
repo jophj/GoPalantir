@@ -38,16 +38,34 @@ function queryGymHistory(gymId) {
   return promise
 }
 
+function computeLevel(points) {
+  if (points < 2000) return 1
+  if (points < 4000) return 2
+  if (points < 8000) return 3
+  if (points < 12000) return 4
+  if (points < 16000) return 5
+  if (points < 20000) return 6
+  if (points < 30000) return 7
+  if (points < 40000) return 8
+  if (points < 50000) return 9
+  if (points >= 50000) return 10
+  return -1
+}
+
 function getGymHistory(gymId) {
   let promise = new Promise((resolve, reject) => {
     queryGymHistory(gymId).then((gyms) => {
       let gymEvents = [];
       let currentState = {
         points: 0,
-        teamId: 0
+        teamId: 0,
+        level: -1
       }
 
       gyms.forEach( g => {
+        let gymLevel = computeLevel(g.gym_points)
+        if (currentState.level === gymLevel) return;
+
         if (g.team_id === currentState.teamId) {
           if (g.gym_points > currentState.points) {
             gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.INCREASING, g))
@@ -64,6 +82,7 @@ function getGymHistory(gymId) {
           gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.CONQUERED, g))
         }
 
+        currentState.level = gymLevel
         currentState.points = g.gym_points
         currentState.teamId = g.team_id
       })
@@ -71,7 +90,8 @@ function getGymHistory(gymId) {
 
       let detailsPromises = gymEvents.map(g => {
         let promise = new Promise((resolve, reject) => {
-          // can be optimized using date ranges
+          // can not be optimized using date ranges
+          // can be optimized reducing the queries
           GymDetails.find({
             id: g.gymId,
             date: { $gt: g.gym.date }
