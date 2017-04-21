@@ -29,7 +29,6 @@ function GymSnapshotController(GymLevelCalculator, $anchorScroll, $timeout, $loc
     }
 
     ctrl.absUrl = $location.absUrl()
-    console.log($routeParams)
     if ($routeParams.eventId) {
       ctrl.absUrl = ctrl.absUrl.substring(0, ctrl.absUrl.lastIndexOf('/'))
     }
