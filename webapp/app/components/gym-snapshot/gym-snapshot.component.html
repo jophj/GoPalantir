@@ -1,4 +1,4 @@
-<div layout="row">
+<div layout="row" id={{$ctrl.gymSnapshot.date}}>
   <div md-colors="::{background: $ctrl.teamColor[{{::$ctrl.gymSnapshot.teamId}}]}">&nbsp;</div>
   <div layout="column" layout-align="start center" class="md-padding md-body-1" flex="nogrow">
     <span>{{::$ctrl.date}}</span>
@@ -12,6 +12,14 @@
     <div ng-repeat="pokemon in $ctrl.gymSnapshot.pokemon | orderBy:'':true track by $index">
       <span class="md-caption">{{::$index+1}}.</span>
       <span class="md-caption">{{::pokemon.trainer_name}}</span>
+    </div>
+  </div>
+
+  <div layout="column" layout-align="start end" flex="shrink" class="md-padding">
+    <div>
+      <a ng-href="{{::$ctrl.absUrl}}">
+        <md-icon>link</md-icon>
+      </a>
     </div>
   </div>
 </div>

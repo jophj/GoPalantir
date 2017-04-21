@@ -14,10 +14,10 @@ app.config([
     $translateProvider.preferredLanguage('it');
     $routeProvider.otherwise({redirectTo: '/gym-status'})
   }
-]);
+])
 
 // All templates dropped here
-angular.module('gymTrackr.templates', []);
+angular.module('gymTrackr.templates', [])
 
 // All global services dropped here
-angular.module('gymTrackr.services', []);
+angular.module('gymTrackr.services', [])
