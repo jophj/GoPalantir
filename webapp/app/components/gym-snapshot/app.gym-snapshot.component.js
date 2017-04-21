@@ -9,8 +9,8 @@ angular.module('gymTrackr.gymDetails')
   }
 })
 
-GymSnapshotController.$inject = ['GymLevelCalculator', '$anchorScroll', '$timeout']
-function GymSnapshotController(GymLevelCalculator, $anchorScroll, $timeout) {
+GymSnapshotController.$inject = ['GymLevelCalculator', '$anchorScroll', '$timeout', '$location', '$routeParams']
+function GymSnapshotController(GymLevelCalculator, $anchorScroll, $timeout, $location, $routeParams) {
   const ctrl = this
 
   ctrl.teamColor = [
@@ -27,6 +27,14 @@ function GymSnapshotController(GymLevelCalculator, $anchorScroll, $timeout) {
     if (ctrl.scroll) {
       $timeout(function(){$anchorScroll(ctrl.gymSnapshot.date)})
     }
+
+    ctrl.absUrl = $location.absUrl()
+    console.log($routeParams)
+    if ($routeParams.eventId) {
+      ctrl.absUrl = ctrl.absUrl.substring(0, ctrl.absUrl.lastIndexOf('/'))
+    }
+
+    ctrl.absUrl += '/' + ctrl.gymSnapshot.date
   }
 }
 
