@@ -5,6 +5,10 @@ angular.module('gymTrackr.gymDetails', ['gymTrackr.services', 'gymTrackr.config'
     url: '/gym-details',
     template: '<gym-details-view layout="column" flex></gym-details-view>'
   })
+  .when('/gym-details/:id/:eventId', {
+    url: '/gym-details',
+    template: '<gym-details-view layout="column" flex></gym-details-view>'
+  })
 }])
 
 .component('gymDetailsView', {
@@ -16,7 +20,7 @@ GymDetailsViewController.$inject = ['GymDetailsService', '$routeParams']
 function GymDetailsViewController(GymDetailsService, $routeParams) {
   let ctrl = this
   ctrl.gym = GymDetailsService.gym
-
+  ctrl.scrollToSnapshot = $routeParams.eventId
   GymDetailsService
     .loadHistory($routeParams.id)
     .then(function(gymHistory) {

@@ -40,6 +40,20 @@ const GYM_EVENT_TYPE = {
   CONQUERED: 'conquered'
 }
 
+function computeLevel(points) {
+  if (points < 2000) return 1
+  if (points < 4000) return 2
+  if (points < 8000) return 3
+  if (points < 12000) return 4
+  if (points < 16000) return 5
+  if (points < 20000) return 6
+  if (points < 30000) return 7
+  if (points < 40000) return 8
+  if (points < 50000) return 9
+  if (points >= 50000) return 10
+  return -1
+}
+
 function queryGymHistory(gymId) {
   let promise = new Promise( (resolve, reject) => {
     Gym.find({
@@ -55,18 +69,26 @@ function queryGymHistory(gymId) {
   return promise
 }
 
-function computeLevel(points) {
-  if (points < 2000) return 1
-  if (points < 4000) return 2
-  if (points < 8000) return 3
-  if (points < 12000) return 4
-  if (points < 16000) return 5
-  if (points < 20000) return 6
-  if (points < 30000) return 7
-  if (points < 40000) return 8
-  if (points < 50000) return 9
-  if (points >= 50000) return 10
-  return -1
+function getNewEvent(currentState, gymStatus, nextGymStatus) {
+  if (!nextGymStatus) nextGymStatus = gymStatus
+  let gymLevel = computeLevel(gymStatus.gym_points)
+  if (currentState.level === gymLevel) return
+
+  if (gymStatus.team_id === currentState.teamId) {
+    if (gymStatus.gym_points > currentState.points) {
+      return new GymEvent(nextGymStatus.gym_id, GYM_EVENT_TYPE.INCREASING, gymStatus)
+    }
+    else if (gymStatus.gym_points < currentState.points) {
+      return new GymEvent(nextGymStatus.gym_id, GYM_EVENT_TYPE.DECREASING, gymStatus)
+    }
+    else {
+      // stable event removed to have less data to process
+      // return new GymEvent(nextGymStatus.gym_id, GYM_EVENT_TYPE.STABLE, gymStatus)
+    }
+  }
+  else {
+    return new GymEvent(nextGymStatus.gym_id, GYM_EVENT_TYPE.CONQUERED, gymStatus)
+  }
 }
 
 function getGymHistory(gymId) {
@@ -79,30 +101,25 @@ function getGymHistory(gymId) {
         level: -1
       }
 
-      gyms.forEach( g => {
-        let gymLevel = computeLevel(g.gym_points)
-        if (currentState.level === gymLevel) return;
+      if (gyms.length > 0) currentState.level = computeLevel(gyms[0])
 
-        if (g.team_id === currentState.teamId) {
-          if (g.gym_points > currentState.points) {
-            gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.INCREASING, g))
-          }
-          else if (g.gym_points < currentState.points) {
-            gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.DECREASING, g))
-          }
-          else {
-            // stable event removed to have less data to process
-            // gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.STABLE, g))
-          }
-        }
-        else {
-          gymEvents.push(new GymEvent(g.gym_id, GYM_EVENT_TYPE.CONQUERED, g))
+      for(var i = 0; i < gyms.length - 1; i++) {
+        let gymStatus = gyms[i]
+        let nextGymStatus = gyms[i + 1]
+        let newEvent = getNewEvent(currentState, gymStatus, nextGymStatus)
+        if (newEvent != null) {
+          gymEvents.push(newEvent)
         }
 
-        currentState.level = gymLevel
-        currentState.points = g.gym_points
-        currentState.teamId = g.team_id
-      })
+        currentState.level = computeLevel(gymStatus.gym_points)
+        currentState.points = gymStatus.gym_points
+        currentState.teamId = gymStatus.team_id
+      }
+      let newEvent = getNewEvent(currentState, gyms[gyms.length - 1])
+      if (newEvent != null) {
+        gymEvents.push(newEvent)
+      }
+
       gymEvents.reverse()
 
       let detailsPromises = gymEvents.map(g => {
@@ -111,9 +128,9 @@ function getGymHistory(gymId) {
           // can be optimized reducing the queries
           GymDetails.find({
             id: g.gymId,
-            date: { $gt: g.gym.date }
+            date: { $lt: g.gym.date }
           })
-          .sort({date: 1})
+          .sort({date: -1})
           .limit(1)
           .exec((err, data) => {
             if (data && data.length > 0) {
