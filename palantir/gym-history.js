@@ -25,6 +25,7 @@ function gymStatusMapper(g) {
   gymStatus.longitude = g.gym.longitude
   gymStatus.imageUrl = g.details && g.details.url
   gymStatus.activityIntensity = g.activity
+  gymStatus.moreDetails = g.moreDetails
   return gymStatus
 }
 
@@ -131,10 +132,11 @@ function getGymHistory(gymId) {
             date: { $lt: g.gym.date }
           })
           .sort({date: -1})
-          .limit(1)
+          // .limit(1)
           .exec((err, data) => {
             if (data && data.length > 0) {
-              g.details = data[0]              
+              g.details = data[0]
+              g.moreDetails = data
             }
             if (err) reject(err)
             else resolve(g)
@@ -162,3 +164,30 @@ class GymEvent {
 }
 
 module.exports = getGymHistory
+
+// getGymHistory('YzVhY2U5YjkyZDVmNDBhMjlhMzFlZDlkYzI3MDY0YmQuMTY=').then(history => {
+//   // history = history.slice(0,10)
+
+//   history = history.map(h => ({
+//     date: h.date,
+//     pokemon: (h.pokemon || []).map(p => p.trainer_name)
+//   }))
+//   console.log(history)
+  
+// })
+
+
+Gym.find({
+  gym_id: 'YzVhY2U5YjkyZDVmNDBhMjlhMzFlZDlkYzI3MDY0YmQuMTY=',
+  // date: { $lt: g.gym.date }
+})
+.sort({date: -1})
+//.limit(1)
+.exec((err, data) => {
+  data = data.map(h => ({
+    date: h.date,
+    points: h.gym_points
+    // pokemon: (h.pokemon || []).map(p => p.trainer_name)
+  }))
+  console.log(data)
+})

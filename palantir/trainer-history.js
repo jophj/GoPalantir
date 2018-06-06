@@ -114,3 +114,7 @@ class TrainerEvent {
 }
 
 module.exports = getTrainerHistory
+
+getTrainerHistory('ErDiabloSupremo').then((data) => {
+  console.log(data)
+})
